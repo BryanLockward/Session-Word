@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <form action="add_word" method="POST">
+    {% csrf_token %}
+    <label for='word'>Add a new word</label>
+    <input type="text" name="word"><br>
+    <label for="color">Choose Color:</label>
+    <label><input type="radio" name="color" value="red">Red</label>
+    <label><input checked="checked" type="radio" name="color" value="black">Black</label>
+    <label><input type="radio" name="color" value="blue">Blue</label><br>
+    <label for="font">show in BIG fonts!</label>
+    <input type="hidden" name="font" value="15">
+    <input type="checkbox" name="font" value='25'><br>
+    <input type="submit" value="Submit">
+  </form>
+  <a href="/clear"><button>Clear Session</button></a>
+  <ul>
+    {% if request.session.words %}
+      {% for x in request.session.words %}
+        <li style="color:{{ x.color }};font-size:{{ x.font }}px;">{{x.word}} - added on {{ x.created_at }}</li>
+      {% endfor %}
+    {% endif %}
+  </ul>
+</body>
+</html>
